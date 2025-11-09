@@ -88,41 +88,58 @@
 </section>
 
 
-<section id="menu" x-data="menuData()" x-init="init()" class="py-12 bg-white">
+<section id="menu" class="py-12 bg-white">
   <div class="flex justify-center gap-4 mb-8">
     <button 
-      @click="setCategory('makanan')" 
-      :class="category === 'makanan' ? 'bg-[#ff5722] text-white' : 'bg-white text-[#2B2B2B] border border-gray-300 hover:bg-[#ff5722] hover:text-white transition'" 
-      class="tab-btn px-6 py-2 rounded-full font-semibold">
+      onclick="showCategory('makanan')" 
+      id="btnMakanan"
+      class="bg-[#ff5722] text-white px-6 py-2 rounded-full font-semibold">
       Makanan
     </button>
     <button 
-      @click="setCategory('minuman')" 
-      :class="category === 'minuman' ? 'bg-[#ff5722] text-white' : 'bg-white text-[#2B2B2B] border border-gray-300 hover:bg-[#ff5722] hover:text-white transition'" 
-      class="tab-btn px-6 py-2 rounded-full font-semibold">
+      onclick="showCategory('minuman')" 
+      id="btnMinuman"
+      class="bg-white text-[#2B2B2B] border border-gray-300 hover:bg-[#ff5722] hover:text-white transition px-6 py-2 rounded-full font-semibold">
       Minuman
     </button>
   </div>
 
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 px-6 lg:px-16">
-    <template x-for="(item, index) in items" :key="index">
-      <div class="rounded-2xl overflow-hidden shadow-lg bg-white">
-        <img :src="item.img" alt="" class="w-full h-56 object-cover">
+  <div id="menuContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 px-6 lg:px-16">
+    @foreach(\App\Models\Produk::where('kategori', 'makanan')->get() as $item)
+      <div class="rounded-2xl overflow-hidden shadow-lg bg-white card-item makanan">
+        <img src="{{ asset('storage/'.$item->gambar) }}" alt="" class="w-full h-56 object-cover">
         <div class="bg-gray-900 text-white p-4 flex justify-between items-center rounded-b-2xl">
           <div>
-            <h3 class="font-semibold text-lg" x-text="item.name"></h3>
+            <h3 class="font-semibold text-lg">{{ $item->nama }}</h3>
+            <p class="text-gray-300 text-sm">{{ $item->deskripsi }}</p>
           </div>
           <div class="flex items-center gap-2">
-            <span class="bg-yellow-400 text-black w-6 h-6 flex items-center justify-center rounded-full">
-              →
-            </span>
-            <p class="text-yellow-400 font-bold" x-text="item.price"></p>
+            <span class="bg-yellow-400 text-black w-6 h-6 flex items-center justify-center rounded-full">→</span>
+            <p class="text-yellow-400 font-bold">Rp{{ number_format($item->harga) }}</p>
           </div>
         </div>
       </div>
-    </template>
+    @endforeach
+
+    @foreach(\App\Models\Produk::where('kategori', 'minuman')->get() as $item)
+      <div class="rounded-2xl overflow-hidden shadow-lg bg-white card-item minuman hidden">
+        <img src="{{ asset('storage/'.$item->gambar) }}" alt="" class="w-full h-56 object-cover">
+        <div class="bg-gray-900 text-white p-4 flex justify-between items-center rounded-b-2xl">
+          <div>
+            <h3 class="font-semibold text-lg">{{ $item->nama }}</h3>
+            <p class="text-gray-300 text-sm">{{ $item->deskripsi }}</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="bg-yellow-400 text-black w-6 h-6 flex items-center justify-center rounded-full">→</span>
+            <p class="text-yellow-400 font-bold">Rp{{ number_format($item->harga) }}</p>
+          </div>
+        </div>
+      </div>
+    @endforeach
   </div>
 </section>
+
+
 
 <section id="about" class="py-20 bg-white">
   <div class="container mx-auto px-6 lg:px-16 flex flex-col lg:flex-row items-center gap-12">

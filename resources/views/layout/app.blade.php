@@ -75,37 +75,15 @@
     }
   }
 
-  function menuData() {
-    return {
-      category: 'makanan',
-      items: [],
-
-      allData: {
-        makanan: [
-          { name: 'Mie Ayam', price: '$15.000', img: '{{ asset("images/mieAyam.jpg") }}' },
-          { name: 'Nasi Goreng', price: '15.000', img: '{{ asset("images/nasiGoreng.jpg") }}' },
-          { name: 'Sop Bakso', price: '10.000', img: '{{ asset("images/sopBakso.jpg") }}' },
-          { name: 'Soto Ayam', price: '12.000', img: '{{ asset("images/sotoAyam.jpg") }}' },
-          { name: 'Soto Ayam', price: '12.000', img: '{{ asset("images/sotoAyam.jpg") }}' },
-        ],
-        minuman: [
-          { name: 'Es Teh Manis', price: '$2.00', img: '{{ asset("images/esTeh.jpg") }}' },
-          { name: 'Kopi Hitam', price: '$2.50', img: '{{ asset("images/kopiHitam.jpg") }}' },
-          { name: 'Jus Alpukat', price: '$3.00', img: '{{ asset("images/jusAlpukat.jpg") }}' },
-          { name: 'Cappuccino', price: '$3.40', img: '{{ asset("images/cappuccino.jpg") }}' },
-        ]
-      },
-
-      init() {
-        this.items = this.allData[this.category];
-      },
-
-      setCategory(cat) {
-        this.category = cat;
-        this.items = this.allData[cat];
-      }
-    }
-  }
+  function showCategory(cat) {
+  document.querySelectorAll('.card-item').forEach(el => el.classList.add('hidden'));
+  document.querySelectorAll('.' + cat).forEach(el => el.classList.remove('hidden'));
+  
+  document.getElementById('btnMakanan').classList.toggle('bg-[#ff5722]', cat === 'makanan');
+  document.getElementById('btnMakanan').classList.toggle('text-white', cat === 'makanan');
+  document.getElementById('btnMinuman').classList.toggle('bg-[#ff5722]', cat === 'minuman');
+  document.getElementById('btnMinuman').classList.toggle('text-white', cat === 'minuman');
+}
 </script>
 </body>
 </html>
